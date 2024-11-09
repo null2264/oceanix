@@ -1,15 +1,13 @@
 # Upstream: https://github.com/OpenIntelWireless/itlwm/releases
 
 { lib }: rec {
-  latest = v2_2_0_alpha;
+  latest = v2_1_0;
 
-  default = v2_1_0;
-
-  v2_2_0_alpha = {
-    canonicalVersion = "v2.2.0-alpha";
-    url = "https://github.com/OpenIntelWireless/itlwm/releases/download/v2.2.0-alpha/itlwm-v2.2.0-DEBUG-alpha-ee56708.zip";
-    sha256 = "sha256-AIKVSJrD2+tW9BboQQ5MdoR+XEVoATZt7Qezlkp0JXs=";
-  };
+  # v2_2_0_alpha = {
+  #   canonicalVersion = "v2.2.0-alpha";
+  #   url = "https://github.com/OpenIntelWireless/itlwm/releases/download/v2.2.0-alpha/itlwm-v2.2.0-DEBUG-alpha-ee56708.zip";
+  #   sha256 = "sha256-AIKVSJrD2+tW9BboQQ5MdoR+XEVoATZt7Qezlkp0JXs=";
+  # };
 
   v2_1_0 = {
     canonicalVersion = "v2.1.0";

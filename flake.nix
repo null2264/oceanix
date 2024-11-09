@@ -40,7 +40,7 @@
               validate = false;  # Ignore validation for sample
               resources.packages = [
                 pkgs.oc.airportitlwm.latest-ventura
-                pkgs.oc.itlwm.v2_1_0  # FIXME: .latest is broken
+                pkgs.oc.itlwm.latest
                 pkgs.oc.applealc.latest
                 pkgs.oc.brightnesskeys.latest
                 pkgs.oc.ecenabler.latest
