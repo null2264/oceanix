@@ -1,6 +1,9 @@
 { lib, pkgs }:
-(import ../../stdPkger.nix {
-  inherit lib pkgs;
-  pname = "brightnesskeys";
-  path = ./.;
-})
+
+{
+  brightnesskeys = (import ../../stdPkger.nix {
+    inherit lib pkgs;
+    pname = "brightnesskeys";
+    path = ./.;
+  });
+}

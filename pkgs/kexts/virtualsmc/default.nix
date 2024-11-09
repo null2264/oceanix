@@ -1,6 +1,9 @@
 { lib, pkgs }:
-(import ../../stdPkger.nix {
-  inherit lib pkgs;
-  pname = "virtualsmc";
-  path = ./.;
-})
+
+{
+  virtualsmc = (import ../../stdPkger.nix {
+    inherit lib pkgs;
+    pname = "virtualsmc";
+    path = ./.;
+  });
+}

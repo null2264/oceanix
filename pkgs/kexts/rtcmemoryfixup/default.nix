@@ -1,6 +1,9 @@
 { lib, pkgs }:
-(import ../../stdPkger.nix {
-  inherit lib pkgs;
-  pname = "rtcmemoryfixup";
-  path = ./.;
-})
+
+{
+  rtcmemoryfixup = (import ../../stdPkger.nix {
+    inherit lib pkgs;
+    pname = "rtcmemoryfixup";
+    path = ./.;
+  });
+}
