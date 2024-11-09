@@ -62,6 +62,7 @@
         lib = nixpkgs.lib;
       in
       {
+        # FIXME: Make it support the new pkgs.oc.<package>.<version> format. currently <version> is derivation but <package> is not.
         # packages = (import ./pkgs { inherit lib pkgs; });
 
         apps = rec {
