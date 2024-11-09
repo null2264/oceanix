@@ -38,8 +38,8 @@
           ({ lib, pkgs, ... }: {
             oceanix.opencore = {
               resources.packages = [
-                pkgs.oc.airportitlwm.v2_3_0-ventura
-                pkgs.oc.itlwm.latest
+                pkgs.oc.airportitlwm.latest-ventura
+                pkgs.oc.itlwm.v2_1_0  # FIXME: .latest is broken
                 pkgs.oc.applealc.latest
                 pkgs.oc.brightnesskeys.latest
                 pkgs.oc.ecenabler.latest
@@ -62,7 +62,7 @@
         lib = nixpkgs.lib;
       in
       {
-        packages = (import ./pkgs { inherit lib pkgs; });
+        # packages = (import ./pkgs { inherit lib pkgs; });
 
         apps = rec {
           fmt = utils.lib.mkApp {
