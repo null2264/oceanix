@@ -60,10 +60,42 @@
       let
         pkgs = nixpkgs.legacyPackages.${system};
         lib = nixpkgs.lib;
+        ocPkgs = import ./pkgs { inherit lib pkgs; };
+
+        # REF: https://github.com/NixOS/nixpkgs/pull/221608
+        collect' =
+        pred:
+        f:
+        attrs:
+          let
+            recurse = prefix: attrs:
+              builtins.concatMap
+                (name: visit (prefix ++ [ name ]) attrs.${name})
+                (builtins.attrNames attrs);
+            visit = path': value:
+              if pred path' value then
+                [ (f path' value) ]
+              else if builtins.isAttrs value then
+                recurse path' value
+              else
+                [ ];
+          in
+          visit [ ] attrs;
+
+        # REF: https://github.com/NixOS/nixpkgs/pull/221608
+        flattenAttrs =
+        pred:
+        f:
+        attrs:
+          if pred attrs then attrs
+          else
+            builtins.listToAttrs (map (x: pkgs.lib.nameValuePair (f x.path) x.value) (collect'
+              (_: v: pred v || !builtins.isAttrs v)
+              (path: value: { inherit path value; })
+              attrs));
       in
       {
-        # FIXME: Make it support the new pkgs.oc.<package>.<version> format. currently <version> is derivation but <package> is not.
-        # packages = (import ./pkgs { inherit lib pkgs; });
+        packages = flattenAttrs pkgs.lib.isDerivation (builtins.concatStringsSep "-") ocPkgs;
 
         apps = rec {
           fmt = utils.lib.mkApp {
