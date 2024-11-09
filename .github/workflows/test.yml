@@ -7,7 +7,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+
     - uses: cachix/install-nix-action@v27
       with:
         github_access_token: ${{ secrets.GITHUB_TOKEN }}
+
     - run: nix flake check
+
+    - name: Archive build results
+      run: tar -I zstd -cf build.tar.zst result/EFI
+
+    - name: Upload build folder
+      uses: actions/upload-artifact@v4
+      with:
+        name: build-artifacts
+        path: build.tar.zst
+        if-no-files-found: error
+        retention-days: 3
