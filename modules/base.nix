@@ -42,7 +42,7 @@ in
 
       package = mkOption {
         type = types.package;
-        default = pkgs.opencore-latest-release;
+        default = pkgs.oc.opencore.latest;
         description = "The OpenCore package to use";
       };
 
