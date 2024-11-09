@@ -21,11 +21,12 @@
           });
       };
 
-      overlays.default = final: prev:
-        (import ./pkgs {
+      overlays.default = final: prev: {
+        oc = (import ./pkgs {
           inherit (prev) lib;
-          pkgs.oc = prev;
+          pkgs = prev;
         });
+      };
 
       checks.x86_64-linux.buildExampleEfi = (self.lib.OpenCoreConfig {
         pkgs = import nixpkgs {
