@@ -3,8 +3,6 @@
 { lib }: rec {
   latest = v2_2_0_alpha;
 
-  default = v2_1_0;
-
   v2_2_0_alpha = {
     canonicalVersion = "v2.2.0-alpha";
     supportedOS = [ "BigSur" "Catalina" "Monterey" "Ventura" ];

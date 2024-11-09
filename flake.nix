@@ -38,7 +38,7 @@
           ({ lib, pkgs, ... }: {
             oceanix.opencore = {
               resources.packages = [
-                pkgs.oc.airportitlwm.latest-ventura
+                pkgs.oc.airportitlwm.latest.ventura
                 pkgs.oc.itlwm.latest
                 pkgs.oc.applealc.latest
                 pkgs.oc.brightnesskeys.latest
