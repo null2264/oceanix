@@ -93,6 +93,12 @@ in
             "Tools folders to be copied into the final package, used along with resources.packages";
         };
       };
+
+      validate = mkOption {
+        type = types.bool;
+        default = true;
+        description = "Whether to automatically validate generated Config.plist with ocvalidate";
+      };
     };
   };
 
@@ -172,13 +178,15 @@ in
             "") resources.KextsFolders)}
       '';
 
-    oceanix.efiPackage = pkgs.runCommand "buildEfi" { allowSubstitutes = false; } ''
+    oceanix.efiPackage = pkgs.runCommand "buildEfi" { allowSubstitutes = false; } (''
       mkdir -p $out/
 
       cp -r --no-preserve=ownership,mode ${cfg.efiIntermediatePackage}/EFI $out
 
-      echo "${plistFile}" > $out/EFI/OC/config.plist
-    '';
+      echo "${plistFile}" > $out/EFI/OC/Config.plist
+    '' + pkgs.lib.optionalString cfg.opencore.validate ''
+      ${cfg.opencore.package}/Utilities/ocvalidate/${if pkgs.stdenv.isDarwin then "ocvalidate" else "ocvalidate.linux"} $out/EFI/OC/Config.plist
+    '');
   }
     {
       # These sections are good-defaults from Sample.plist

@@ -37,6 +37,7 @@
         modules = [
           ({ lib, pkgs, ... }: {
             oceanix.opencore = {
+              validate = false;  # Ignore validation for sample
               resources.packages = [
                 pkgs.oc.airportitlwm.latest-ventura
                 pkgs.oc.itlwm.v2_1_0  # FIXME: .latest is broken
