@@ -15,17 +15,18 @@
   #   Ventura = "sha256-Dckhcqx/aKc2eVcXV+cQMmrbHkX5S5GlmoQ8y7iGx6M=";
   # };
 
+  # FIXME: Re-add the hashes, need automation.
   v2_3_0 = let
     canonicalVersion = "v2.3.0";
   in {
     inherit canonicalVersion;
     supportedOS = [ "BigSur" "Monterey" "Ventura" "Sonoma14.0" "Sonoma14.4" ];
     mkUrl = osVer: "https://github.com/OpenIntelWireless/itlwm/releases/download/${canonicalVersion}/AirportItlwm_${canonicalVersion}_stable_${osVer}.kext.zip";
-    BigSur = "sha256-DYn+T1FQI6gc6ha7w1QNLOstDcMSzG8QUAOOR/6jH9w=";
-    Monterey = "sha256-2kp0aLuS++hzUT4M0NA302f2UFEznXO3JtTEC2Fn+SM=";
-    Ventura = "sha256-fqGTB++a4ImR2RHm8d5Z5oJETiHbzWNCteCgN/Gchg4=";
-    "Sonoma14.0" = "sha256-15X8WETpEm9DJ8S+XOrpKX6/igl3N3ooxKJDRmQ2Cbs=";
-    "Sonoma14.4" = "sha256-fvEqgDfrm8eVgow0j0+gcouK3leqCYSwN4Fu+RwtURk=";
+    BigSur = "";
+    Monterey = "";
+    Ventura = "sha256-RJ3hhhZCNgsf9PaoeF+ld43qFXSuDBZxJgInzZ4Jhik=";
+    "Sonoma14.0" = "";
+    "Sonoma14.4" = "";
   };
 
   v2_2_0 = let
@@ -34,9 +35,9 @@
     inherit canonicalVersion;
     supportedOS = [ "BigSur" "Monterey" "Ventura" ];
     mkUrl = osVer: "https://github.com/OpenIntelWireless/itlwm/releases/download/${canonicalVersion}/AirportItlwm_${canonicalVersion}_stable_${osVer}.kext.zip";
-    BigSur = "sha256-wJzyIWAEUZyNIQwVzha+zFlStEysrwrIxnUT8e4SJdg=";
-    Monterey = "sha256-vBffrZPy59fXgGQP0mIZ4nwa/qKYss6OBeQyjCSTH70=";
-    Ventura = "sha256-101gciXPK2xf/fhCToNT42LqwkFjn6oGNgEHC3Is6rQ=";
+    BigSur = "";
+    Monterey = "";
+    Ventura = "";
   };
 
   v2_1_0 = let

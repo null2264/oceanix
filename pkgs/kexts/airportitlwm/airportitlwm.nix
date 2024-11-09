@@ -6,7 +6,7 @@ in stdenv.mkDerivation rec {
 
   src = fetchzip {
     url = versionList."${ver}".mkUrl osVer;
-    sha256 = versionList."${ver}"."${osVer}";
+    hash = versionList."${ver}"."${osVer}";
     stripRoot = false;
   };
 
