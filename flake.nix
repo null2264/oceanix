@@ -43,6 +43,11 @@
               type = "alcu";
             };
 
+            kexts.virtualsmc = {
+              enable = false;  # FIXME: WIP
+              includedPlugins = [ "SMCBatteryManager" "SMCDellSensors" ];
+            };
+
             oceanix.opencore = {
               validate = false;  # Ignore validation for sample
               resources.packages = [
@@ -52,7 +57,6 @@
                 pkgs.oc.ecenabler.latest
                 pkgs.oc.intel-bluetooth-firmware.latest
                 pkgs.oc.nvmefix.latest
-                pkgs.oc.virtualsmc.latest
                 pkgs.oc.whatevergreen.latest
                 pkgs.oc.lilu.latest
                 pkgs.oc.voodooi2c.latest
