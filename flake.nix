@@ -6,6 +6,8 @@
 
   outputs = { self, nixpkgs, utils, ... }: with utils.lib;
     rec {
+      systems = [ system.i686-linux system.x86_64-linux system.x86_64-darwin ];
+
       lib = {
         oc = (import ./lib/stdlib-extended.nix nixpkgs.lib).oc;
         OpenCoreConfig =
@@ -27,21 +29,25 @@
           pkgs = prev;
         });
       };
-
-      checks.x86_64-linux.buildExampleEfi = (self.lib.OpenCoreConfig {
+    } // eachSystem [ system.i686-linux system.x86_64-linux system.x86_64-darwin ] (system: {
+      checks.buildExampleEfi = (self.lib.OpenCoreConfig {
         pkgs = import nixpkgs {
-          system = "x86_64-linux";
+          inherit system;
           overlays = [ self.overlays.default ];
         };
 
         modules = [
           ({ lib, pkgs, ... }: {
+            kexts.applealc = {
+              enable = true;
+              type = "alcu";
+            };
+
             oceanix.opencore = {
               validate = false;  # Ignore validation for sample
               resources.packages = [
                 pkgs.oc.airportitlwm.latest-ventura
                 pkgs.oc.itlwm.latest
-                pkgs.oc.applealc.latest
                 pkgs.oc.brightnesskeys.latest
                 pkgs.oc.ecenabler.latest
                 pkgs.oc.intel-bluetooth-firmware.latest
@@ -57,7 +63,7 @@
           })
         ];
       }).efiPackage;
-    } // eachSystem [ system.i686-linux system.x86_64-linux system.x86_64-darwin ] (system:
+    }) // eachSystem [ system.i686-linux system.x86_64-linux system.x86_64-darwin ] (system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
         lib = nixpkgs.lib;

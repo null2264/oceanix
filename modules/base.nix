@@ -1,4 +1,4 @@
-{ lib, pkgs, config, ... }:
+{ config, lib, pkgs, ... }:
 with lib;
 let
   cfg = config.oceanix;

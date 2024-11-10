@@ -13,6 +13,7 @@ with lib;
 let
   modules = [
     ./base.nix
+    ./kexts/applealc.nix
     (pkgs.path + "/nixos/modules/misc/assertions.nix")
     (pkgs.path + "/nixos/modules/misc/meta.nix")
 
