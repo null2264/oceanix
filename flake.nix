@@ -90,7 +90,7 @@
           visit [ ] attrs;
 
         # REF: https://github.com/NixOS/nixpkgs/pull/221608
-        flattenAttrs =
+        flattenAttrs = # pkgslib.flattenAttrs  # FIXME: Uncomment once GH-221608 is merged
         pred:
         f:
         attrs:
