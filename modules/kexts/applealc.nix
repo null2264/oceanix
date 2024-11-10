@@ -44,7 +44,7 @@ in
       postInstall = ''
         ${old.postInstall or ""}
 
-        rm -rf $out/${if cfg.type == "alc" then "AppleALCU" else "AppleALC"}.kext
+        rm -rf $out/Kexts/${if cfg.type == "alc" then "AppleALCU" else "AppleALC"}.kext
       '';
     });
   in mkIf cfg.enable {
