@@ -1,6 +1,8 @@
 { lib, stdenv, fetchzip, release ? true, ver ? "latest" }:
-let versionList = (import ./version.nix { inherit lib; });
-in stdenv.mkDerivation rec {
+let
+  mkKext = import ../../lib/mkKext.nix;
+  versionList = (import ./version.nix { inherit lib; });
+in mkKext rec {
   pname = "virtualsmc-${if release then "release" else "debug"}";
   version = versionList."${ver}".canonicalVersion;
 
@@ -17,4 +19,6 @@ in stdenv.mkDerivation rec {
     mkdir -p $out/Kexts
     cp -r ./Kexts/*.kext $out/Kexts
   '';
+
+  inherit stdenv;
 }

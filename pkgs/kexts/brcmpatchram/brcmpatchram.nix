@@ -1,6 +1,8 @@
 { lib, stdenv, fetchzip, release ? true, ver ? "latest" }:
-let versionList = (import ./version.nix { inherit lib; });
-in stdenv.mkDerivation rec {
+let
+  mkKext = import ../../lib/mkKext.nix;
+  versionList = (import ./version.nix { inherit lib; });
+in mkKext rec {
   pname = "brcmpatchram-${if release then "release" else "debug"}";
   version = versionList."${ver}".canonicalVersion;
 
@@ -13,8 +15,5 @@ in stdenv.mkDerivation rec {
     stripRoot = false;
   };
 
-  installPhase = ''
-    mkdir -p $out/Kexts
-    cp -r ./*.kext $out/Kexts
-  '';
+  inherit stdenv;
 }
