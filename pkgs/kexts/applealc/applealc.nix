@@ -11,7 +11,7 @@ in mkKext rec {
       "https://github.com/acidanthera/AppleALC/releases/download/${version}/AppleALC-${version}-${
         if release then "RELEASE" else "DEBUG"
       }.zip";
-    sha256 = versionList."${ver}"."${if release then "release" else "debug"}";
+    hash = versionList."${ver}"."${if release then "release" else "debug"}";
     stripRoot = false;
   };
 

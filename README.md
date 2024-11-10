@@ -64,3 +64,21 @@ This section is under heavy development.
 
 # Configuration
 See [my personal config](https://github.com/LEXUGE/opencore-cfg) as an example.
+
+# Development
+
+## Generate SRI Hash
+
+- Download the Kext
+- Unzip it to an empty directory
+
+  ```sh
+  mkdir <dirname>/
+  unzip -d <dirname> <the kext zip>
+  ```
+
+- Run the following command get the SRI Hash
+
+  ```sh
+  nix-hash --type sha256 --to-sri $(nix-hash --type sha256 <dirname>)
+  ```
