@@ -1,7 +1,7 @@
 # Upstream: https://github.com/OpenIntelWireless/itlwm/releases
 
 { lib }: rec {
-  latest = v2_1_0;
+  latest = v2_3_0;
 
   # v2_2_0_alpha = {
   #   canonicalVersion = "v2.2.0-alpha";
@@ -9,9 +9,27 @@
   #   sha256 = "sha256-AIKVSJrD2+tW9BboQQ5MdoR+XEVoATZt7Qezlkp0JXs=";
   # };
 
-  v2_1_0 = {
+  v2_3_0 = let
+    canonicalVersion = "v2.3.0";
+  in {
+    inherit canonicalVersion;
+    url = "https://github.com/OpenIntelWireless/itlwm/releases/download/${canonicalVersion}/itlwm_${canonicalVersion}_stable.kext.zip";
+    sha256 = "sha256-TUDUdr7d2UCsGquJkV/Iecbj3HYoA7jeMhknd5Qfmiw=";
+  };
+
+  v2_2_0 = let
+    canonicalVersion = "v2.2.0";
+  in {
+    inherit canonicalVersion;
+    url = "https://github.com/OpenIntelWireless/itlwm/releases/download/${canonicalVersion}/itlwm_${canonicalVersion}_stable.kext.zip";
+    sha256 = "sha256-QwoIj9JcCKxE/BQ2ebpaFpQUAy0OujcUAfd96FOY0io=";
+  };
+
+  v2_1_0 = let
     canonicalVersion = "v2.1.0";
-    url = "https://github.com/OpenIntelWireless/itlwm/releases/download/v2.1.0/itlwm_v2.1.0_stable.kext.zip";
+  in {
+    inherit canonicalVersion;
+    url = "https://github.com/OpenIntelWireless/itlwm/releases/download/${canonicalVersion}/itlwm_${canonicalVersion}_stable.kext.zip";
     sha256 = "sha256-6MzyYWCohJiLNzFYpnCh5GkIQPUh6vw6iSJv/WVnfmE=";
   };
 }
