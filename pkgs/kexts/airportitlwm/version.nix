@@ -1,6 +1,10 @@
 # Upstream: https://github.com/OpenIntelWireless/itlwm/releases
 
-{ lib }: rec {
+{ lib }:
+
+let
+  mkUrl = version: osVer: "https://github.com/OpenIntelWireless/itlwm/releases/download/${version}/AirportItlwm_${version}_stable_${osVer}.kext.zip";
+in rec {
   latest = v2_3_0;
 
   # v2_2_0_alpha = {
@@ -18,7 +22,7 @@
   in {
     inherit canonicalVersion;
     supportedOS = [ "BigSur" "Monterey" "Ventura" "Sonoma14.0" "Sonoma14.4" ];
-    mkUrl = osVer: "https://github.com/OpenIntelWireless/itlwm/releases/download/${canonicalVersion}/AirportItlwm_${canonicalVersion}_stable_${osVer}.kext.zip";
+    mkUrl = mkUrl canonicalVersion;
     BigSur = "sha256-jSoyovOy4XGnBcVwQbh6TPSGuX+4HS/hKBrzBGNHaSc=";
     Monterey = "sha256-/rrnbg1Rhd5X9CMEjzrsd9ehgxzqHfmaEEopuTbLwFY=";
     Ventura = "sha256-RJ3hhhZCNgsf9PaoeF+ld43qFXSuDBZxJgInzZ4Jhik=";
@@ -31,7 +35,7 @@
   in {
     inherit canonicalVersion;
     supportedOS = [ "BigSur" "Monterey" "Ventura" ];
-    mkUrl = osVer: "https://github.com/OpenIntelWireless/itlwm/releases/download/${canonicalVersion}/AirportItlwm_${canonicalVersion}_stable_${osVer}.kext.zip";
+    mkUrl = mkUrl canonicalVersion;
     BigSur = "sha256-KrUboZ953crx0vy5qmbqdxzWRuGXnniwuQKN2WD20Z8=";
     Monterey = "sha256-1tZ/bUrdDDcYedAaKXFWfW8tXM9M5h4vxGZnbR+I+BA=";
     Ventura = "sha256-4EfOZemFUWzmn2ADtvYo4jj+HZ8hAje7Lxjhj2LVUrU=";
@@ -42,7 +46,7 @@
   in {
     inherit canonicalVersion;
     supportedOS = [ "BigSur" "Monterey" ];
-    mkUrl = osVer: "https://github.com/OpenIntelWireless/itlwm/releases/download/${canonicalVersion}/AirportItlwm_${canonicalVersion}_stable_${osVer}.kext.zip";
+    mkUrl = mkUrl canonicalVersion;
     BigSur = "sha256-F6xjLHWF0mAwKpdYbXjM05E8qZoWTmg3U/6NHGnF5i8=";
     Monterey = "sha256-D/xkAKHsuYCLqz43E4OhcsfDbSzK57J/FUcovuPOiHM=";
   };
