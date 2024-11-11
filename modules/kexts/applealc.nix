@@ -1,5 +1,4 @@
 { config, lib, pkgs, ... }:
-
 with lib;
 
 let
@@ -41,10 +40,10 @@ in
 
   config = let
     applealcPackage = cfg.package.overrideAttrs (old: {
-      postInstall = ''
-        ${old.postInstall or ""}
+      preInstall = ''
+        ${old.preInstall or ""}
 
-        rm -rf $out/Kexts/${if cfg.type == "alc" then "AppleALCU" else "AppleALC"}.kext
+        rm -r ./${if cfg.type == "alc" then "AppleALCU" else "AppleALC"}.kext
       '';
     });
   in mkIf cfg.enable {
