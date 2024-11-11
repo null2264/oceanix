@@ -52,13 +52,12 @@ in
   };
 
   config = let
+    plugins = builtins.map (plugin: plugin + ".kext") ([ "VirtualSMC" ] ++ cfg.includedPlugins);
     virtualsmcPackage = cfg.package.overrideAttrs (old: {
-      postInstall = ''
-        ${old.postInstall or ""}
+      preInstall = ''
+        ${old.preInstall or ""}
 
-        # TODO: Remove excluded kexts
-        echo "${builtins.concatStringsSep " " cfg.includedPlugins}"
-        echo "'kexts.virtualsmc.enable = true' is not yet ready!"; exit 1;
+        find Kexts/ -type d -iname "*.kext" \! \( -iname ${builtins.concatStringsSep " -o -iname " plugins} \) -exec rm -r \{\} +
       '';
     });
   in mkIf cfg.enable {

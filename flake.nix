@@ -44,7 +44,7 @@
             };
 
             kexts.virtualsmc = {
-              enable = false;  # FIXME: WIP
+              enable = true;  # FIXME: WIP
               includedPlugins = [ "SMCBatteryManager" "SMCDellSensors" ];
             };
 
