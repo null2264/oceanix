@@ -6,8 +6,6 @@
 
   outputs = { self, nixpkgs, utils, ... }: with utils.lib;
     rec {
-      systems = [ system.i686-linux system.x86_64-linux system.x86_64-darwin ];
-
       lib = {
         oc = (import ./lib/stdlib-extended.nix nixpkgs.lib).oc;
         OpenCoreConfig =
@@ -29,7 +27,7 @@
           pkgs = prev;
         });
       };
-    } // eachSystem [ system.i686-linux system.x86_64-linux system.x86_64-darwin ] (system: {
+    } // eachDefaultSystem (system: {
       checks.buildExampleEfi = (self.lib.OpenCoreConfig {
         pkgs = import nixpkgs {
           inherit system;
@@ -67,7 +65,7 @@
           })
         ];
       }).efiPackage;
-    }) // eachSystem [ system.i686-linux system.x86_64-linux system.x86_64-darwin ] (system:
+    }) // eachDefaultSystem (system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
         lib = nixpkgs.lib;
@@ -94,7 +92,7 @@
           visit [ ] attrs;
 
         # REF: https://github.com/NixOS/nixpkgs/pull/221608
-        flattenAttrs = # pkgslib.flattenAttrs  # FIXME: Uncomment once GH-221608 is merged
+        flattenAttrs = # pkgs.lib.flattenAttrs  # FIXME: Uncomment once GH-221608 is merged
         pred:
         f:
         attrs:
