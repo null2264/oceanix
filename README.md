@@ -67,7 +67,31 @@ See [my personal config](https://github.com/LEXUGE/opencore-cfg) as an example.
 
 # Development
 
-## Generate SRI Hash
+## Generate SRI Hash for Kexts
+
+### Automated
+
+You can install my custom nix shell script package to automate the process, then run `nix-srisum-unzip [URL]...`:
+
+  ```nix
+  nix-srisum-unzip = pkgs.writeShellScriptBin "nix-srisum-unzip" ''
+    FILES_TO_DOWNLOAD=($@)
+    mkdir -p /tmp/nix-srisum-unzip-files
+    for i in "''${FILES_TO_DOWNLOAD[@]}"; do
+      filename="''$(uuidgen):archive.zip"
+      wget -q -O /tmp/nix-srisum-unzip-files/$filename ''$i
+
+      dirname="$(uuidgen):extract"
+      mkdir -p /tmp/nix-srisum-unzip-files/$dirname
+      unzip -qq -d /tmp/nix-srisum-unzip-files/$dirname /tmp/nix-srisum-unzip-files/$filename
+
+      hash=$(nix-hash --to-sri --type sha256 $(nix-hash --type sha256 /tmp/nix-srisum-unzip-files/$dirname))
+      echo "''$hash - ''$i"
+    done
+  '';
+  ```
+
+### Manual
 
 - Download the Kext
 - Unzip it to an empty directory
