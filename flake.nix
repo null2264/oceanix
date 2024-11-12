@@ -27,49 +27,47 @@
           pkgs = prev;
         });
       };
-    } // eachDefaultSystem (system: {
-      checks.buildExampleEfi = (self.lib.OpenCoreConfig {
+    } // eachDefaultSystem (system:
+      let
         pkgs = import nixpkgs {
           inherit system;
           overlays = [ self.overlays.default ];
         };
 
-        modules = [
-          ({ lib, pkgs, ... }: {
-            kexts.applealc = {
-              enable = true;
-              type = "alcu";
-            };
+        ocConfig = self.lib.OpenCoreConfig {
+          inherit pkgs;
 
-            kexts.virtualsmc = {
-              enable = true;
-              includedPlugins = [ "SMCBatteryManager" "SMCDellSensors" ];
-            };
+          modules = [
+            ({ lib, pkgs, ... }: {
+              kexts.applealc = {
+                enable = true;
+                type = "alcu";
+              };
 
-            oceanix.opencore = {
-              validate = false;  # Ignore validation for sample
-              resources.packages = [
-                pkgs.oc.airportitlwm.latest-ventura
-                pkgs.oc.itlwm.latest
-                pkgs.oc.brightnesskeys.latest
-                pkgs.oc.ecenabler.latest
-                pkgs.oc.intel-bluetooth-firmware.latest
-                pkgs.oc.nvmefix.latest
-                pkgs.oc.whatevergreen.latest
-                pkgs.oc.lilu.latest
-                pkgs.oc.voodooi2c.latest
-                pkgs.oc.voodoops2controller.latest
-                pkgs.oc.intel-mausi.latest
-              ];
-            };
-          })
-        ];
-      }).efiPackage;
-    }) // eachDefaultSystem (system:
-      let
-        pkgs = nixpkgs.legacyPackages.${system};
-        lib = nixpkgs.lib;
-        ocPkgs = import ./pkgs { inherit lib pkgs; };
+              kexts.virtualsmc = {
+                enable = true;
+                includedPlugins = [ "SMCBatteryManager" "SMCDellSensors" ];
+              };
+
+              oceanix.opencore = {
+                validate = false;  # Ignore validation for sample
+                resources.packages = [
+                  pkgs.oc.airportitlwm.latest-ventura
+                  pkgs.oc.itlwm.latest
+                  pkgs.oc.brightnesskeys.latest
+                  pkgs.oc.ecenabler.latest
+                  pkgs.oc.intel-bluetooth-firmware.latest
+                  pkgs.oc.nvmefix.latest
+                  pkgs.oc.whatevergreen.latest
+                  pkgs.oc.lilu.latest
+                  pkgs.oc.voodooi2c.latest
+                  pkgs.oc.voodoops2controller.latest
+                  pkgs.oc.intel-mausi.latest
+                ];
+              };
+            })
+          ];
+        };
 
         # REF: https://github.com/NixOS/nixpkgs/pull/221608
         collect' =
@@ -102,9 +100,10 @@
               (_: v: pred v || !builtins.isAttrs v)
               (path: value: { inherit path value; })
               attrs));
-      in
-      {
-        packages = flattenAttrs pkgs.lib.isDerivation (builtins.concatStringsSep "-") ocPkgs;
+      in {
+        checks.buildExampleEfi = ocConfig.efiPackage;
+
+        packages = flattenAttrs pkgs.lib.isDerivation (builtins.concatStringsSep "-") pkgs.oc;
 
         apps = rec {
           fmt = utils.lib.mkApp {
@@ -125,5 +124,6 @@
           };
           default = fmt;
         };
-      });
+      }
+    );
 }
