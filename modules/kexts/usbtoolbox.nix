@@ -41,10 +41,10 @@ in
   config = let
     usbtoolboxPackage = cfg.package.overrideAttrs (old: {
       preInstall =
-        old.preInstall or "" +
+        (old.preInstall or "") +
         (if cfg.mapping != null then ''
-          rm -r ./UTBDefault.kext
-          cp -r ${cfg.mapping} ./
+          rm -r ./UTB*.kext
+          cp -r ${cfg.mapping} ./UTBMap.kext
         '' else "");
     });
   in mkIf cfg.enable {
