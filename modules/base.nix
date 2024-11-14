@@ -155,7 +155,12 @@ in
 
         ${concatStringsSep "\n" (lib.lists.map (dir:
           if (builtins.readDir dir) != {} then
-            "cp --no-preserve=ownership,mode ${dir}/*.aml $out/EFI/OC/ACPI/"
+            ''
+            cp --no-preserve=ownership,mode -t $out/EFI/OC/ACPI/ ${dir}/*.dsl 2>/dev/null || echo -n
+            cp --no-preserve=ownership,mode -t $out/EFI/OC/ACPI/ ${dir}/*.aml 2>/dev/null || echo -n
+
+            find $out/EFI/OC/ACPI/ -type f -name "*.dsl" -exec ${pkgs.acpica-tools}/bin/iasl \{\} \; -exec rm \{\} \;
+            ''
           else
             "") resources.ACPIFolders)}
 
