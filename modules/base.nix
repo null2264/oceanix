@@ -138,36 +138,36 @@ in
             "") resources.packages)}
         ${concatStringsSep "\n" (lib.lists.map (pkg:
           if (builtins.pathExists "${pkg}/ACPI") && (builtins.readDir "${pkg}/ACPI" != {}) then
-            "cp -r --no-preserve=ownership,mode ${pkg}/ACPI/* $out/EFI/OC/ACPI/"
+            "cp --no-preserve=ownership,mode ${pkg}/ACPI/*.aml $out/EFI/OC/ACPI/"
           else
             "") resources.packages)}
         ${concatStringsSep "\n" (lib.lists.map (pkg:
           if (builtins.pathExists "${pkg}/Drivers") && (builtins.readDir "${pkg}/Drivers" != {}) then
-            "cp -r --no-preserve=ownership,mode ${pkg}/Drivers/* $out/EFI/OC/Drivers/"
+            "cp --no-preserve=ownership,mode ${pkg}/Drivers/*.efi $out/EFI/OC/Drivers/"
           else
             "") resources.packages)}
         ${concatStringsSep "\n" (lib.lists.map (pkg:
           if (builtins.pathExists "${pkg}/Tools") && (builtins.readDir "${pkg}/Tools" != {}) then
-            "cp -r --no-preserve=ownership,mode ${pkg}/Tools/* $out/EFI/OC/Tools/"
+            "cp --no-preserve=ownership,mode ${pkg}/Tools/*.efi $out/EFI/OC/Tools/"
           else
             "") resources.packages)}
 
 
         ${concatStringsSep "\n" (lib.lists.map (dir:
           if (builtins.readDir dir) != {} then
-            "cp -r --no-preserve=ownership,mode ${dir}/* $out/EFI/OC/ACPI/"
+            "cp --no-preserve=ownership,mode ${dir}/*.aml $out/EFI/OC/ACPI/"
           else
             "") resources.ACPIFolders)}
 
         ${concatStringsSep "\n" (lib.lists.map (dir:
           if (builtins.readDir dir) != {} then
-            "cp -r --no-preserve=ownership,mode ${dir}/* $out/EFI/OC/Tools/"
+            "cp --no-preserve=ownership,mode ${dir}/*.efi $out/EFI/OC/Tools/"
           else
             "") resources.ToolsFolders)}
 
         ${concatStringsSep "\n" (lib.lists.map (dir:
           if (builtins.readDir dir) != {} then
-            "cp -r --no-preserve=ownership,mode ${dir}/* $out/EFI/OC/Drivers/"
+            "cp --no-preserve=ownership,mode ${dir}/*.efi $out/EFI/OC/Drivers/"
           else
             "") resources.DriversFolders)}
 
