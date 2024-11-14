@@ -14,6 +14,7 @@ let
   modules = [
     ./base.nix
     ./kexts/applealc.nix
+    ./kexts/usbtoolbox.nix
     ./kexts/virtualsmc.nix
     (pkgs.path + "/nixos/modules/misc/assertions.nix")
     (pkgs.path + "/nixos/modules/misc/meta.nix")

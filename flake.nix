@@ -49,6 +49,11 @@
                 includedPlugins = [ "SMCBatteryManager" "SMCDellSensors" ];
               };
 
+              kexts.usbtoolbox = {
+                enable = true;
+                mapping = null;
+              };
+
               oceanix.opencore = {
                 validate = false;  # Ignore validation for sample
                 resources.packages = [
