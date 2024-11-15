@@ -48,6 +48,13 @@ in
           "Whether to automatically enable drivers";
       };
 
+      autoEnableTools = mkOption {
+        type = types.bool;
+        default = false;
+        description =
+          "Whether to automatically enable tools";
+      };
+
       useSampleAsDefault = mkOption {
         type = types.bool;
         default = true;
@@ -120,7 +127,7 @@ in
     oceanix.opencore.settings = with oc.resolver; {
       ACPI.Add = mkDefaultRecursive (mkACPI cfg.opencore.autoEnableACPI cfg.efiIntermediatePackage);
       UEFI.Drivers = mkDefaultRecursive (mkDrivers cfg.opencore.autoEnableDrivers cfg.efiIntermediatePackage);
-      Misc.Tools = mkDefaultRecursive (mkTools cfg.efiIntermediatePackage);
+      Misc.Tools = mkDefaultRecursive (mkTools cfg.opencore.autoEnableTools cfg.efiIntermediatePackage);
       Kernel.Add = mkDefaultRecursive (mkKexts pkgs cfg.efiIntermediatePackage);
     };
 

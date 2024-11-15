@@ -45,7 +45,7 @@ with builtins; rec {
   # }
   mkACPI = autoEnable: pkg: mkACPIRecursive autoEnable "${pkg}/EFI/OC/ACPI";
 
-  mkToolsRecursive = dir:
+  mkToolsRecursive = autoEnable: dir:
     listToAttrs (flatten (mapAttrsToList
       (name: type:
         let path = dir + "/${name}";
@@ -58,7 +58,7 @@ with builtins; rec {
                 Flavour = "Auto";
                 Name = name;
                 Comment = name;
-                Enabled = false;
+                Enabled = autoEnable;
                 Path = pathToRelative 7 path;
                 RealPath = false;
                 TextMode = false;
@@ -67,10 +67,10 @@ with builtins; rec {
           else
             [ ]
         else
-          mkToolsRecursive path)
+          mkToolsRecursive autoEnable path)
       (readDir dir)));
 
-  mkTools = pkg: mkToolsRecursive "${pkg}/EFI/OC/Tools";
+  mkTools = autoEnable: pkg: mkToolsRecursive autoEnable "${pkg}/EFI/OC/Tools";
 
   mkDriversRecursive = autoEnable: dir:
     listToAttrs (flatten (mapAttrsToList
