@@ -66,7 +66,7 @@ rec {
 
         listEmpty = "<array/>";
         list = ind: x:
-          if x == [] then listEmpty else
+          if x == [] then (literal ind listEmpty) else
           libStr.concatStringsSep "\n" [
             (literal ind "<array>")
             (item ind x)
@@ -75,7 +75,7 @@ rec {
 
         attrsEmpty = "<dict/>";
         attrs = ind: x:
-          if x == {} then attrsEmpty else
+          if x == {} then (literal ind attrsEmpty) else
           libStr.concatStringsSep "\n" [
             (literal ind "<dict>")
             (attr ind x)
