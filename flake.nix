@@ -51,7 +51,7 @@
 
               kexts.usbtoolbox = {
                 enable = true;
-                mapping = null;
+                mapping = "";
               };
 
               oceanix.opencore = {

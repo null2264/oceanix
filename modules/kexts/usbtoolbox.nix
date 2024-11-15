@@ -29,10 +29,10 @@ in
       };
 
       mapping = mkOption {
-        type = types.nullOr types.path;
+        type = with types; nullOr (either types.path types.str);
         default = null;
         description = ''
-          Path to your newly created UTBMap.kext.
+          Path to your newly created UTBMap.kext. Set to empty string ("") if it's already handled by `resources.KextsFolders`.
         '';
       };
     };
@@ -42,8 +42,10 @@ in
     usbtoolboxPackage = cfg.package.overrideAttrs (old: {
       preInstall =
         (old.preInstall or "") +
-        (if cfg.mapping != null then ''
+        (if (cfg.mapping != null) then ''
           rm -r ./UTB*.kext
+        '' else "") +
+        (if (cfg.mapping != null && (builtins.typeOf cfg.mapping) != "string") then ''
           cp -r ${cfg.mapping} ./UTBMap.kext
         '' else "");
     });
