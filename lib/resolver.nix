@@ -72,7 +72,7 @@ with builtins; rec {
 
   mkTools = pkg: mkToolsRecursive "${pkg}/EFI/OC/Tools";
 
-  mkDriversRecursive = dir:
+  mkDriversRecursive = autoEnable: dir:
     listToAttrs (flatten (mapAttrsToList
       (name: type:
         let path = dir + "/${name}";
@@ -83,17 +83,17 @@ with builtins; rec {
                 Arguments = "";
                 LoadEarly = false;
                 Comment = name;
-                Enabled = false;
+                Enabled = autoEnable;
                 Path = pathToRelative 7 path;
               })
             ]
           else
             [ ]
         else
-          mkDriversRecursive path)
+          mkDriversRecursive autoEnable path)
       (readDir dir)));
 
-  mkDrivers = pkg: mkDriversRecursive "${pkg}/EFI/OC/Drivers";
+  mkDrivers = autoEnable: pkg: mkDriversRecursive autoEnable "${pkg}/EFI/OC/Drivers";
 
   # How to generate Kexts
   # 1. Parse kexts using mkKexts: pkg -> attrset
