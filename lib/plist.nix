@@ -64,14 +64,18 @@ rec {
 
         item = ind: libStr.concatMapStringsSep "\n" (indent ind);
 
+        listEmpty = "<array/>";
         list = ind: x:
+          if x == [] then listEmpty else
           libStr.concatStringsSep "\n" [
             (literal ind "<array>")
             (item ind x)
             (literal ind "</array>")
           ];
 
+        attrsEmpty = "<dict/>";
         attrs = ind: x:
+          if x == {} then attrsEmpty else
           libStr.concatStringsSep "\n" [
             (literal ind "<dict>")
             (attr ind x)
