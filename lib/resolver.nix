@@ -15,7 +15,7 @@ with builtins; rec {
     strings.concatStrings (strings.intersperse "/"
       (lists.drop level (splitString "/" (toString path))));
 
-  mkACPIRecursive = dir:
+  mkACPIRecursive = autoEnable: dir:
     listToAttrs (flatten (mapAttrsToList
       (name: type:
         let path = dir + "/${name}";
@@ -25,14 +25,14 @@ with builtins; rec {
               (nameValuePair name {
                 Comment = name;
                 # default to false
-                Enabled = false;
+                Enabled = autoEnable;
                 Path = pathToRelative 7 path;
               })
             ]
           else
             [ ]
         else
-          mkACPIRecursive path)
+          mkACPIRecursive autoEnable path)
       (readDir dir)));
 
   # Generated attrsets are of the form:
@@ -43,7 +43,7 @@ with builtins; rec {
   #      Path = "foo.aml";
   #   };
   # }
-  mkACPI = pkg: mkACPIRecursive "${pkg}/EFI/OC/ACPI";
+  mkACPI = autoEnable: pkg: mkACPIRecursive autoEnable "${pkg}/EFI/OC/ACPI";
 
   mkToolsRecursive = dir:
     listToAttrs (flatten (mapAttrsToList
