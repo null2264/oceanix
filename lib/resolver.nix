@@ -56,6 +56,7 @@ with builtins; rec {
                 Arguments = "";
                 Auxiliary = true;
                 Flavour = "Auto";
+                FullNvramAccess = false;
                 Name = name;
                 Comment = name;
                 Enabled = autoEnable;

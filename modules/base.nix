@@ -258,6 +258,7 @@ in
         UEFI = {
           inherit (sampleConfig.UEFI) APFS AppleInput Audio ConnectDrivers Input Output ProtocolOverrides Quirks;
           ReservedMemory = [ ];
+          Unload = [ ];
         };
       });
     }];
