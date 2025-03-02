@@ -43,10 +43,14 @@ in
       preInstall =
         (old.preInstall or "") +
         (if (cfg.mapping != null) then ''
-          rm -r ./UTB*.kext
-        '' else "") +
+          rm -r ./UTBDefault.kext
+        '' else ''
+          mkdir ./USBToolBox.kext/Contents/PlugIns
+          mv -r ./UTBDefault.kext ./USBToolBox.kext/Contents/PlugIns/UTBMap.kext
+        '') +
         (if (cfg.mapping != null && (builtins.typeOf cfg.mapping) != "string") then ''
-          cp -r ${cfg.mapping} ./UTBMap.kext
+          mkdir ./USBToolBox.kext/Contents/PlugIns
+          cp -r ${cfg.mapping} ./USBToolBox.kext/Contents/PlugIns/UTBMap.kext
         '' else "");
     });
   in mkIf cfg.enable {
