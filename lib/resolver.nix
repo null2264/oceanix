@@ -135,7 +135,7 @@ with builtins; rec {
               info = parsePlist pkgs infoListPath;
             in
             [
-              (nameValuePair name ({
+              (nameValuePair (if parent == null then name else "${parent}/${name}") ({
                 Arch = "Any";
                 Comment = name;
                 Enabled = false;
