@@ -18,5 +18,10 @@ in mkKext rec {
     stripRoot = false;
   };
 
+  installPhase = ''
+    mkdir -p $out/Kexts
+    cp -r ./VoodooRMI-*/*.kext $out/Kexts
+  '';
+
   inherit stdenv;
 }

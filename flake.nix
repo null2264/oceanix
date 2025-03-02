@@ -66,6 +66,7 @@
                   pkgs.oc.whatevergreen.latest
                   pkgs.oc.lilu.latest
                   pkgs.oc.voodooi2c.latest
+                  pkgs.oc.voodoormi.latest
                   pkgs.oc.voodoops2controller.latest
                   pkgs.oc.intel-mausi.latest
                 ];
