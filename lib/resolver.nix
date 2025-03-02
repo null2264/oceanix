@@ -27,6 +27,8 @@ with builtins; rec {
                 # default to false
                 Enabled = autoEnable;
                 Path = pathToRelative 7 path;
+                # lower means loaded early
+                Priority = 1000;
               })
             ]
           else
@@ -44,6 +46,19 @@ with builtins; rec {
   #   };
   # }
   mkACPI = autoEnable: pkg: mkACPIRecursive autoEnable "${pkg}/EFI/OC/ACPI";
+
+  removeACPIPriority = list:
+    map
+      (value: updateManyAttrsByPath
+        [{
+          path = [ "Priority" ];
+          update = old: null;
+        }]
+        value)
+      list;
+
+  finalizeACPI = attrs:
+    removeACPIPriority (sort (a: b: a.Priority < b.Priority) (transpose attrs));
 
   mkToolsRecursive = autoEnable: dir:
     listToAttrs (flatten (mapAttrsToList

@@ -139,10 +139,7 @@ in
         }
         { path = [ "Misc" "Tools" ]; update = old: transpose old; }
         { path = [ "UEFI" "Drivers" ]; update = old: transpose old; }
-        {
-          path = [ "ACPI" "Add" ];
-          update = old: transpose old;
-        }
+        { path = [ "ACPI" "Add" ]; update = old: finalizeACPI old; }
       ]
       cfg.opencore.settings;
 
