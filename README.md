@@ -38,7 +38,7 @@ This section is under heavy development.
 
   inputs.nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
   inputs.utils.url = "github:numtide/flake-utils";
-  inputs.oceanix.url = "github:LEXUGE/oceanix";
+  inputs.oceanix.url = "github:null2264/oceanix";
 
   outputs = { self, nixpkgs, utils, oceanix, ... }:
     utils.lib.eachSystem [ "x86_64-linux" "x86_64-darwin" ] (system:
@@ -63,7 +63,7 @@ This section is under heavy development.
 3. Run `nix build`
 
 # Configuration
-See [my personal config](https://github.com/LEXUGE/opencore-cfg) as an example.
+See [my personal config](https://github.com/null2264/ThinkPad-L460-OpenCore) as an example.
 
 # Development
 

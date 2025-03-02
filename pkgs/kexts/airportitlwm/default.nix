@@ -10,11 +10,13 @@
           inherit lib;
         };
       in
-      builtins.listToAttrs (map
-        (x: lib.attrsets.nameValuePair "${ver}-${lib.strings.toLower x}" (pkgs.callPackage ./airportitlwm.nix {
-          inherit ver;
-          osVer = x;
+      builtins.listToAttrs (lib.attrsets.mapAttrs'
+        (osVer: hash: lib.attrsets.nameValuePair "${ver}-${lib.strings.toLower osVer}" (pkgs.callPackage ./airportitlwm.nix {
+          inherit osVer hash;
+          url = verInfo."${ver}".mkUrl osVer;
+          canonicalVersion = verInfo."${ver}".canonicalVersion;
+          versionName = ver;
         }))
-        verInfo."${ver}".supportedOS);
+        verInfo."${ver}".os);
   });
 }

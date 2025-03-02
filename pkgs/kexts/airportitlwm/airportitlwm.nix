@@ -1,14 +1,20 @@
-{ lib, stdenv, fetchzip, ver ? "latest", osVer }:
+{ lib, stdenv, fetchzip,
+  versionName ? "latest",
+  canonicalVersion,
+  osVer,
+  url,
+  hash,
+  ...
+}:
+
 let
   mkKext = import ../../lib/mkKext.nix;
-  versionList = (import ./version.nix { inherit lib; });
 in mkKext rec {
   pname = "airportitlwm";
-  version = versionList."${ver}".canonicalVersion;
+  version = canonicalVersion;
 
   src = fetchzip {
-    url = versionList."${ver}".mkUrl osVer;
-    hash = versionList."${ver}"."${osVer}";
+    inherit hash url;
     stripRoot = false;
   };
 
