@@ -2,18 +2,18 @@
 with lib;
 
 let
-  cfg = config.kexts.intelmausi;
+  cfg = config.kexts.intel-mausi;
 in
 
 {
   options = {
-    kexts.intelmausi = {
+    kexts.intel-mausi = {
       enable = mkEnableOption "IntelMausi";
 
       package = mkOption {
         type = types.package;
-        default = pkgs.oc.intelmausi.latest;
-        defaultText = literalExpression "pkgs.oc.intelmausi.latest";
+        default = pkgs.oc.intel-mausi.latest;
+        defaultText = literalExpression "pkgs.oc.intel-mausi.latest";
         description = ''
           Package containing the IntelMausi Kext.
         '';
@@ -47,7 +47,7 @@ in
       '';
     });
   in mkIf cfg.enable {
-    kexts.intelmausi.finalPackage = intelmausiPackage;
+    kexts.intel-mausi.finalPackage = intelmausiPackage;
     oceanix.opencore.resources.packages = [ intelmausiPackage ];
   };
 }
