@@ -49,11 +49,11 @@ in
 
   config = let
     finalPackage = cfg.package.overrideAttrs (old: {
-      preInstall = ''
-        ${old.preInstall or ""}
-
-        mv -r ${cfg.brcmPatchPackage}/BlueToolFixup.kext ./BlueToolFixup.kext
-      '';
+      preInstall =
+        (old.preInstall or "") +
+        (if (cfg.includeBlueToolFixup == true) then ''
+          mv -r ${cfg.brcmPatchPackage}/BlueToolFixup.kext ./BlueToolFixup.kext
+        '' else "");
     });
   in mkIf cfg.enable {
     kexts.intel-bluetooth-firmware.finalPackage = finalPackage;
