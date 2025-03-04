@@ -86,6 +86,7 @@
                   pkgs.oc.voodooi2c.latest
                   pkgs.oc.voodoormi.latest
                   pkgs.oc.voodoops2controller.latest
+                  pkgs.oc.yogasmc.latest
                   pkgs.oc.whatevergreen.latest
                 ];
               };
