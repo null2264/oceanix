@@ -67,6 +67,7 @@
               oceanix.opencore = {
                 validate = false;  # Ignore validation for sample
                 resources.packages = [
+                  pkgs.oc.applemcereporterdisabler
                   pkgs.oc.airportitlwm.latest-ventura
                   pkgs.oc.itlwm.latest
                   pkgs.oc.brcmpatchram.latest
