@@ -12,7 +12,7 @@ in mkKext rec {
 
   src = fetchzip {
     inherit hash;
-    url = "https://github.com/zhen-zen/YogaSMC/releases/download/${version}/DebugEnhancer-${if release then "RELEASE" else "DEBUG"}.zip";
+    url = "https://github.com/zhen-zen/YogaSMC/releases/download/${version}/YogaSMC-${if release then "RELEASE" else "DEBUG"}.zip";
     stripRoot = false;
   };
 
