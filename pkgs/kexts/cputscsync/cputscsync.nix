@@ -12,7 +12,7 @@ in mkKext rec {
 
   src = fetchzip {
     inherit hash;
-    url = "https://github.com/acidanthera/CpuTscSync/releases/download/${version}/CPUFriend-${version}-${if release then "RELEASE" else "DEBUG"}.zip";
+    url = "https://github.com/acidanthera/CpuTscSync/releases/download/${version}/CpuTscSync-${version}-${if release then "RELEASE" else "DEBUG"}.zip";
     stripRoot = false;
   };
 
