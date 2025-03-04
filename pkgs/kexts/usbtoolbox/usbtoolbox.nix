@@ -1,17 +1,21 @@
-{ lib, stdenv, fetchzip, release ? true, ver ? "latest" }:
+{ lib, stdenv, fetchzip,
+  release ? true,
+  version,
+  hash,
+  ...
+}:
 let
   mkKext = import ../../lib/mkKext.nix;
-  versionList = (import ./version.nix { inherit lib; });
 in mkKext rec {
+  inherit version;
   pname = "usbtoolbox-${if release then "release" else "debug"}";
-  version = versionList."${ver}".canonicalVersion;
 
   src = fetchzip {
+    inherit hash;
     url =
       "https://github.com/USBToolBox/kext/releases/download/${version}/USBToolBox-${version}-${
         if release then "RELEASE" else "DEBUG"
       }.zip";
-    sha256 = versionList."${ver}"."${if release then "release" else "debug"}";
     stripRoot = false;
   };
 

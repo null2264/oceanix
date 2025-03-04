@@ -1,20 +1,8 @@
 { lib, pkgs }:
 {
-  voodoormi = (import ../../pkger.nix {
+  voodoormi = (import ../../stdPkger.nix {
     inherit lib pkgs;
+    pname = "voodoormi";
     path = ./.;
-    fn = ver:
-      let
-        verInfo = (import ./version.nix { inherit lib; });
-        canonicalVersion = verInfo."${ver}".canonicalVersion;
-        mkType = x: if (x == "Release") then "" else "-${lib.strings.toLower x}";
-      in
-      lib.attrsets.mapAttrs'
-        (type: hash: lib.attrsets.nameValuePair (ver + (mkType type)) (pkgs.callPackage ./voodoormi.nix {
-          inherit type hash canonicalVersion;
-          version = canonicalVersion;
-          versionName = ver;
-        }))
-        verInfo."${ver}".types;
   });
 }

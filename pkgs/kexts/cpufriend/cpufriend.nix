@@ -1,20 +1,18 @@
 { lib, stdenv, fetchzip,
-  versionName ? "latest",
-  type ? "Release",
+  release ? true,
   version,
   hash,
   ...
 }:
 let
   mkKext = import ../../lib/mkKext.nix;
-  versionList = (import ./version.nix { inherit lib; });
 in mkKext rec {
   inherit version;
   pname = "cpufriend";
 
   src = fetchzip {
     inherit hash;
-    url = "https://github.com/acidanthera/CPUFriend/releases/download/${version}/CPUFriend-${version}-${lib.strings.toUpper type}.zip";
+    url = "https://github.com/acidanthera/CPUFriend/releases/download/${version}/CPUFriend-${version}-${if release then "RELEASE" else "DEBUG"}.zip";
     stripRoot = false;
   };
 

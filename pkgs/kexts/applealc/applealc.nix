@@ -1,17 +1,19 @@
-{ lib, stdenv, fetchzip, release ? true, ver ? "latest" }:
+{ lib, stdenv, fetchzip,
+  release ? true,
+  version,
+  hash,
+  ...
+}:
 let
   mkKext = import ../../lib/mkKext.nix;
-  versionList = (import ./version.nix { inherit lib; });
 in mkKext rec {
-  pname = "applealc-${if release then "release" else "debug"}";
-  version = versionList."${ver}".canonicalVersion;
+  inherit version;
+  pname = "applealc";
 
   src = fetchzip {
+    inherit hash;
     url =
-      "https://github.com/acidanthera/AppleALC/releases/download/${version}/AppleALC-${version}-${
-        if release then "RELEASE" else "DEBUG"
-      }.zip";
-    hash = versionList."${ver}"."${if release then "release" else "debug"}";
+      "https://github.com/acidanthera/AppleALC/releases/download/${version}/AppleALC-${version}-${if release then "RELEASE" else "DEBUG"}.zip";
     stripRoot = false;
   };
 
