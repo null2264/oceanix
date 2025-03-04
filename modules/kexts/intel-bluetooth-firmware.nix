@@ -1,0 +1,62 @@
+{ config, lib, pkgs, ... }:
+with lib;
+
+let
+  cfg = config.kexts.intel-bluetooth-firmware;
+in
+
+{
+  options = {
+    kexts.intel-bluetooth-firmware = {
+      enable = mkEnableOption "IntelBluetoothFirmware";
+
+      package = mkOption {
+        type = types.package;
+        default = pkgs.oc.intel-bluetooth-firmware.latest;
+        defaultText = literalExpression "pkgs.oc.intel-bluetooth-firmware.latest";
+        description = ''
+          Package containing the IntelBluetoothFirmware Kext.
+        '';
+      };
+
+      brcmPatchPackage = mkOption {
+        type = types.package;
+        default = pkgs.oc.brcmpatchram.latest;
+        defaultText = literalExpression "pkgs.oc.brcmpatchram.latest";
+        description = ''
+          Package containing the BrcmPatchRAM Kext. Mainly to retrieve BlueToolFixup.kext.
+        '';
+      };
+
+      finalPackage = mkOption {
+        type = types.package;
+        readOnly = true;
+        visible = false;
+        description = ''
+          Resulting IntelBluetoothFirmware package.
+        '';
+      };
+
+      includeBlueToolFixup = mkOption {
+        type = types.bool;
+        default = true;
+        description = ''
+          BlueToolFixup.kext is required for bluetooth support on macOS Monterey and newer.
+        '';
+      };
+    };
+  };
+
+  config = let
+    finalPackage = cfg.package.overrideAttrs (old: {
+      preInstall = ''
+        ${old.preInstall or ""}
+
+        mv -r ${cfg.brcmPatchPackage}/BlueToolFixup.kext ./BlueToolFixup.kext
+      '';
+    });
+  in mkIf cfg.enable {
+    kexts.intel-bluetooth-firmware.finalPackage = finalPackage;
+    oceanix.opencore.resources.packages = [ finalPackage ];
+  };
+}

@@ -16,6 +16,7 @@ let
     ./kexts/applealc.nix
     ./kexts/cpufriend.nix
     ./kexts/intel-mausi.nix
+    ./kexts/intel-bluetooth-firmware.nix
     ./kexts/usbtoolbox.nix
     ./kexts/virtualsmc.nix
     (pkgs.path + "/nixos/modules/misc/assertions.nix")

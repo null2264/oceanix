@@ -59,11 +59,17 @@
                 dataProvider = "";
               };
 
+              kexts.intel-bluetooth-firmware = {
+                enable = true;
+                includeBlueToolFixup = false;
+              };
+
               oceanix.opencore = {
                 validate = false;  # Ignore validation for sample
                 resources.packages = [
                   pkgs.oc.airportitlwm.latest-ventura
                   pkgs.oc.itlwm.latest
+                  pkgs.oc.bcrmpatchram.latest
                   pkgs.oc.brightnesskeys.latest
                   pkgs.oc.ecenabler.latest
                   pkgs.oc.intel-bluetooth-firmware.latest
