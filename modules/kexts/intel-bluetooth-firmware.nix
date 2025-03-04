@@ -52,7 +52,7 @@ in
       preInstall =
         (old.preInstall or "") +
         (if (cfg.includeBlueToolFixup == true) then ''
-          mv -r ${cfg.brcmPatchPackage}/BlueToolFixup.kext ./BlueToolFixup.kext
+          cp -r ${cfg.brcmPatchPackage}/BlueToolFixup.kext ./BlueToolFixup.kext
         '' else "");
     });
   in mkIf cfg.enable {
