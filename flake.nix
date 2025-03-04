@@ -56,7 +56,7 @@
 
               kexts.cpufriend = {
                 enable = true;
-                mapping = "";
+                dataProvider = "";
               };
 
               oceanix.opencore = {
