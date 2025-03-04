@@ -1,6 +1,6 @@
 { lib, pkgs }:
 {
-  voodoormi = (import ../../pkger.nix {
+  cpufriend = (import ../../pkger.nix {
     inherit lib pkgs;
     path = ./.;
     fn = ver:
