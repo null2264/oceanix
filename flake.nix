@@ -72,6 +72,7 @@
                   pkgs.oc.itlwm.latest
                   pkgs.oc.brcmpatchram.latest
                   pkgs.oc.brightnesskeys.latest
+                  pkgs.oc.cputscsync.latest
                   pkgs.oc.ecenabler.latest
                   pkgs.oc.intel-bluetooth-firmware.latest
                   pkgs.oc.nvmefix.latest
