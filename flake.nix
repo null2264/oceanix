@@ -82,6 +82,7 @@
                   pkgs.oc.lilu.latest
                   pkgs.oc.nvmefix.latest
                   pkgs.oc.restrictevents.latest
+                  pkgs.oc.voltageshift.latest
                   pkgs.oc.voodooi2c.latest
                   pkgs.oc.voodoormi.latest
                   pkgs.oc.voodoops2controller.latest
