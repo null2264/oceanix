@@ -14,6 +14,7 @@ let
   modules = [
     ./base.nix
     ./kexts/applealc.nix
+    ./kexts/cpufriend.nix
     ./kexts/intel-mausi.nix
     ./kexts/usbtoolbox.nix
     ./kexts/virtualsmc.nix

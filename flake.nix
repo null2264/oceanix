@@ -54,6 +54,11 @@
                 mapping = "";
               };
 
+              kexts.cpufriend = {
+                enable = true;
+                mapping = "";
+              };
+
               oceanix.opencore = {
                 validate = false;  # Ignore validation for sample
                 resources.packages = [
