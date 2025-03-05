@@ -146,7 +146,8 @@ with builtins; rec {
                 MinKernel = "";
                 MaxKernel = "";
 
-                dependencies = [];  # For users to use.
+                before = [];
+                after = [];
                 # Internal attrs. passthru should be removed later
                 passthru = {
                   identifier = info.CFBundleIdentifier;
@@ -202,7 +203,7 @@ with builtins; rec {
   orderKexts = attrs:
     map (x: x.data)
       (oc.dag.topoSort
-        (mapAttrs (name: value: oc.dag.entryAfter (value.dependencies ++ value.passthru.dependencies) value)
+        (mapAttrs (name: value: oc.dag.entryBetween value.before (value.after ++ value.passthru.dependencies) value)
           (mapAttrs'
             (name: value: nameValuePair (
               if value.passthru.parent == null then
@@ -221,7 +222,11 @@ with builtins; rec {
             update = old: null;
           }
           {
-            path = [ "dependencies" ];
+            path = [ "after" ];
+            update = old: null;
+          }
+          {
+            path = [ "before" ];
             update = old: null;
           }
         ]
