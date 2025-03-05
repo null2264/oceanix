@@ -188,7 +188,12 @@ with builtins; rec {
       (oc.dag.topoSort
         (mapAttrs (name: value: oc.dag.entryAfter value.passthru.depList value)
           (mapAttrs'
-            (name: value: nameValuePair (value.passthru.identifier) value)
+            (name: value: nameValuePair (
+              if value.passthru.parent == null then
+                value.passthru.identifier
+              else
+                "${value.passthru.parent}/${value.passthru.identifier}"
+              ) value)
             attrs))).result;
 
   removePassthru = list:
