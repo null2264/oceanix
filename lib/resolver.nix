@@ -150,7 +150,7 @@ with builtins; rec {
                 passthru = {
                   identifier = info.CFBundleIdentifier;
                   parent = parent;
-                  depList = trace "${name} (${info.CFBundleIdentifier}) depends on [${toString (parseKextDeps info)}]" (parseKextDeps info);
+                  dependencies = trace "${name} (${info.CFBundleIdentifier}) depends on [${toString (parseKextDeps info)}]" (parseKextDeps info);
                 };
               }))
             ] ++
@@ -184,7 +184,7 @@ with builtins; rec {
       attrs;
 
   # Enabled = null -> Enabled = false
-  parseNullPluginsRecursive = attrs:
+  fixPluginsRecursive = attrs:
     mapAttrs
       (name: value: updateManyAttrsByPath
         [{
@@ -201,7 +201,7 @@ with builtins; rec {
   orderKexts = attrs:
     map (x: x.data)
       (oc.dag.topoSort
-        (mapAttrs (name: value: oc.dag.entryAfter value.passthru.depList value)
+        (mapAttrs (name: value: oc.dag.entryAfter (value.passthru.dependencies) value)
           (mapAttrs'
             (name: value: nameValuePair (
               if value.passthru.parent == null then
@@ -224,7 +224,7 @@ with builtins; rec {
   # used by end-user
   finalizeKexts = autoEnablePlugins: attrs:
     removePassthru (orderKexts
-      (parseNullPluginsRecursive (if autoEnablePlugins then enablePluginsRecursive attrs else attrs)));
+      (fixPluginsRecursive (if autoEnablePlugins then enablePluginsRecursive attrs else attrs)));
 
   parseKextDeps = attrs: mapAttrsToList (name: value: name) attrs.OSBundleLibraries or { };
 
