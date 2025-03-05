@@ -138,7 +138,7 @@ with builtins; rec {
               (nameValuePair (if parent == null then name else "${parent}/${name}") ({
                 Arch = "Any";
                 Comment = name;
-                Enabled = false;
+                Enabled = null;
                 BundlePath = pathToRelative 7 path;
                 ExecutablePath = if info.CFBundleExecutable or null == null then "" else ("Contents/MacOS/" + info.CFBundleExecutable);
                 PlistPath = "Contents/Info.plist";
@@ -175,10 +175,25 @@ with builtins; rec {
         [{
           path = [ "Enabled" ];
           update = old:
-            if value.passthru.parent == null then
+            if value.passthru.parent == null || value.Enabled != null then
               old
             else
               attrs."${value.passthru.parent}".Enabled;
+        }]
+        value)
+      attrs;
+
+  # Enabled = null -> Enabled = false
+  parseNullPluginsRecursive = attrs:
+    mapAttrs
+      (name: value: updateManyAttrsByPath
+        [{
+          path = [ "Enabled" ];
+          update = old:
+            if value.Enabled != null then
+              old
+            else
+              false;
         }]
         value)
       attrs;
@@ -209,7 +224,7 @@ with builtins; rec {
   # used by end-user
   finalizeKexts = autoEnablePlugins: attrs:
     removePassthru (orderKexts
-      (if autoEnablePlugins then enablePluginsRecursive attrs else attrs));
+      (parseNullPluginsRecursive (if autoEnablePlugins then enablePluginsRecursive attrs else attrs)));
 
   parseKextDeps = attrs: mapAttrsToList (name: value: name) attrs.OSBundleLibraries or { };
 
