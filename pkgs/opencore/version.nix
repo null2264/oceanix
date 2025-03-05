@@ -1,5 +1,17 @@
 { lib }: rec {
-  latest = v1_0_2;
+  latest = v1_0_4;
+
+  v1_0_4 = {
+    canonicalVersion = "1.0.4";
+    release = "sha256-B01OlZzEMmpXDguyvADxH5GWjZzFJUKF/QVuHFgQ1CQ=";
+    debug = "sha256-3P1zlBbmR0LCI6Rmh98YYf3a8SCD8yM3S04xWMK40F8=";
+  };
+
+  v1_0_3 = {
+    canonicalVersion = "1.0.3";
+    release = "sha256-T9mBkBr0Z1Ejs6IL6qKQ3usVJEAjNKNtlMJ1M+Lnaxc=";
+    debug = "sha256-4i35oXOlWzjX4V1X+Q5OynTj5lRVCHHQQC6cbpnZohk=";
+  };
 
   v1_0_2 = {
     canonicalVersion = "1.0.2";
