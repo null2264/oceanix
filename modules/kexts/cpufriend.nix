@@ -45,7 +45,8 @@ in
       preInstall =
         (old.preInstall or "") +
         (if (cfg.dataProvider != null && (builtins.typeOf cfg.dataProvider) != "string") then ''
-          cp -r ${cfg.dataProvider} ./CPUFriendDataProvider.kext
+          mkdir ./CPUFriend.kext/Contents/PlugIns
+          cp -r ${cfg.dataProvider} ./CPUFriend.kext/Contents/PlugIns/CPUFriendDataProvider.kext
         '' else "");
     });
   in mkIf cfg.enable {
