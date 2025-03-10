@@ -43,7 +43,7 @@ in
       preInstall = ''
         ${old.preInstall or ""}
 
-        rm -r ./${if cfg.type == "alter" then "YogaSMCAlter" else "YogaSMC"}.kext
+        rm -r ./${if cfg.type == "lilu" then "YogaSMCAlter" else "YogaSMC"}.kext
       '';
     });
   in mkIf cfg.enable {
