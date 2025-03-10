@@ -19,6 +19,7 @@ let
     ./kexts/intel-bluetooth-firmware.nix
     ./kexts/usbtoolbox.nix
     ./kexts/virtualsmc.nix
+    ./kexts/yogasmc.nix
     (pkgs.path + "/nixos/modules/misc/assertions.nix")
     (pkgs.path + "/nixos/modules/misc/meta.nix")
 
